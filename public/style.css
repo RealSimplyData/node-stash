@@ -1,0 +1,19 @@
+.parent {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.file-input > input[type="file"] {
+  height: 0.1px;
+  width: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.file-input > label[for="file"] {
+  cursor: pointer;
+}

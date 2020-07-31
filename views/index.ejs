@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>File Storage</title>
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <% if (locals.hasAccess && hasAccess == true) {%>
+  <body class="bg-gray-200">
+    <div style="height: 100vh; width: 100vw; display: inline-block;">
+      <div class="parent">
+        <div class="bg-white shadow-lg rounded-lg px-4 py-2">
+          <h1 class="text-2xl font-bold text-center">Upload File</h1>
+          <p>
+            Select a file and set a password if needed, then click
+            <span
+              class="px-2 py-1 bg-blue-500 rounded shadow text-white select-none"
+              >Upload</span
+            >.
+          </p>
+          <hr class="my-3" />
+          <form action="/upload" method="POST" enctype="multipart/form-data">
+            <div class="file-input mb-2">
+              <label
+                for="file"
+                class="bg-purple-500 px-2 py-1 rounded shadow text-white hover:bg-purple-600 focus:bg-purple-700 transition duration-200"
+                >Choose a file to upload</label
+              ><br />
+              <input
+                type="file"
+                id="file"
+                name="file"
+                accept="*"
+                required
+                max="1"
+              />
+            </div>
+            <label for="file_password" class="text-gray-500"
+              >Password
+              <span class="text-gray-400">(16 Characters max)</span></label
+            ><br />
+            <input
+              type="password"
+              id="file_password"
+              name="file_password"
+              maxlength="16"
+              class="bg-gray-200 border border-gray-300 rounded shadow px-2 py-1 focus:border-blue-500 transition duration-200 focus:outline-none mb-2"
+              autocomplete="false"
+              disabled
+            /><br />
+            <input
+              type="submit"
+              value="Upload"
+              class="bg-blue-500 px-2 py-1 rounded shadow text-white cursor-pointer hover:bg-blue-600 transition duration-200 focus:outline-none"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+      var inputs = document.querySelectorAll(".file-input");
+      Array.prototype.forEach.call(inputs, function (input) {
+        var label = input.getElementsByTagName("LABEL")[0];
+        var labelVar = label.innerHTML;
+
+        input.addEventListener("change", function (e) {
+          var fileName = "";
+          if (this.files && this.files.length > 1) {
+            fileName = (
+              this.getAttribute("data-multiple-caption") || ""
+            ).replace("{count}", this.files.length);
+          } else {
+            fileName = e.target.value.split("\\").pop();
+          }
+
+          if (fileName) {
+            label.innerHTML = fileName;
+          } else {
+            label.innerHTML = labelVal;
+          }
+        });
+      });
+    </script>
+  </body>
+  <% } else { %>
+  <body class="bg-gray-200">
+    <div style="height: 100vh; width: 100vw; display: inline-block;">
+      <div class="parent">
+        <div class="bg-white shadow-lg rounded-lg px-4 py-2">
+          <h1 class="text-2xl font-bold text-center">Upload File</h1>
+          <p class="text-red-500">
+            You are not authorized to upload files.
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+  <% } %>
+</html>
