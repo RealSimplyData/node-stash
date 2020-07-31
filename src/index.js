@@ -49,11 +49,16 @@ app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "..", "public")));
 
 app.get("/", async (req, res) => {
-  res.render("index", { hasAccess: req.query["auth"] == config.PASSWORD });
+  res.render("index", {
+    hasAccess: req.query["auth"] == config.PASSWORD,
+    passedAuth: req.query["auth"],
+  });
 });
 
 app.post("/upload", upload.single("file"), async (req, res) => {
-  console.log(req.file);
+  console.log(req.body);
+  if (!req.body["auth"] || req.body["auth"] !== config.PASSWORD)
+    return res.status(401).json({ error: true, message: "unauthorized" });
   if (!req.file)
     return res
       .status(400)

@@ -54,6 +54,14 @@
               disabled
             /><br />
             <input
+              type="text"
+              name="auth"
+              id="auth"
+              readonly
+              value="<%= passedAuth %>"
+              class="hidden"
+            />
+            <input
               type="submit"
               value="Upload"
               class="bg-blue-500 px-2 py-1 rounded shadow text-white cursor-pointer hover:bg-blue-600 transition duration-200 focus:outline-none"
