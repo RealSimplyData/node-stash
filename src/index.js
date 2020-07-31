@@ -56,7 +56,6 @@ app.get("/", async (req, res) => {
 });
 
 app.post("/upload", upload.single("file"), async (req, res) => {
-  console.log(req.body);
   if (!req.body["auth"] || req.body["auth"] !== config.PASSWORD)
     return res.status(401).json({ error: true, message: "unauthorized" });
   if (!req.file)
