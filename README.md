@@ -2,6 +2,8 @@
 
 `node-stash` is a node project that acts like a file uploading service, just that it is protected with a simple password and allows the user to upload password encrypted files.
 
+Licensed under the MIT License.
+
 ## Get started
 
 1. First, clone the repository to any folder you want.
