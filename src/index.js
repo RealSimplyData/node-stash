@@ -42,6 +42,10 @@ function loadMetadataFile(filename) {
   };
 }
 
+const isRelative = (relative) =>
+  relative && !relative.startsWith("..") && !path.isAbsolute(relative);
+const isDataFolder = (dir) => isRelative(path.relative(config.DATA_DIR, dir));
+
 const app = express();
 
 app.set("view engine", "ejs");
@@ -108,6 +112,8 @@ app.get("/file/:filename", async (req, res) => {
     return res
       .status(400)
       .json({ error: true, message: "no filename supplied" });
+  if (!isDataFolder(path.join(config.DATA_DIR, req.params["filename"])))
+    return res.status(400).json({ error: true, message: "file not found" });
   if (!fs.existsSync(path.join(config.DATA_DIR, req.params["filename"])))
     return res.status(400).json({ error: true, message: "file not found" });
   const filename = req.params["filename"];
