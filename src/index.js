@@ -130,5 +130,10 @@ app.get("/file/:filename", async (req, res) => {
   });
 });
 
+app.use(async (err, req, res, next) => {
+  res.status(500).json({ error: true, message: "internal server error" });
+  console.log(err.stack);
+});
+
 app.listen(config.PORT || 8080);
 console.log(`Listening on port ${config.PORT || 8080}`);
